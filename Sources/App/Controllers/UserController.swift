@@ -20,6 +20,12 @@ final class UserController{
             })
         })
     }
+    
+    func delete(req: Request) throws -> Future<HTTPStatus>{
+        return try req.parameters.next(User.self).flatMap({ user in
+            return user.delete(on: req)
+        }).transform(to: .ok)
+    }
 }
 
 struct UserForm: Content{
